@@ -1,6 +1,7 @@
 use proc_macro::{TokenStream, TokenTree};
 use quote::quote;
 use syn::{parse_macro_input, DeriveInput};
+use venial::{parse_declaration, Declaration, Enum, Struct};
 
 #[proc_macro_derive(Hello)]
 pub fn hello(item: TokenStream) -> TokenStream {
@@ -34,4 +35,25 @@ pub fn hello_alt(item: TokenStream) -> TokenStream {
     )
     .parse()
     .unwrap()
+}
+
+#[proc_macro_derive(HelloVenial)]
+pub fn hello_venial(item: TokenStream) -> TokenStream {
+    let declaration = parse_declaration(item.into()).unwrap();
+
+    let name = match declaration {
+        Declaration::Struct(Struct { name, .. }) => name,
+        Declaration::Enum(Enum { name, .. }) => name,
+        _ => panic!("Only implemented for struct and enum"),
+    };
+
+    let add_hello_world = quote! {
+        impl #name {
+            fn hello_world(&self) {
+                println!("Hello world")
+            }
+        }
+    };
+
+    add_hello_world.into()
 }
