@@ -10,7 +10,7 @@ impl Example {
     }
 }
 
-#[derive(Hello)]
+#[derive(HelloAlt)]
 enum Pet {
     Cat,
 }
