@@ -3,10 +3,23 @@ use quote::{quote, ToTokens};
 use syn::{
     parse::{Parse, ParseStream},
     parse_macro_input,
-    token::Colon,
-    Data, DataStruct, DeriveInput, Fields, FieldsNamed, FieldsUnnamed, Ident, Result, Type,
-    Visibility,
+    punctuated::Punctuated,
+    token::{Colon, Comma},
+    Data, DataEnum, DataStruct, DeriveInput, Field, Fields, FieldsNamed, FieldsUnnamed, Ident,
+    Result, Variant, Visibility,
 };
+
+enum ItemType {
+    NamedStruct,
+    TupleStruct,
+    Enum,
+}
+
+#[derive(Debug)]
+enum Elements {
+    Fields(Punctuated<Field, Comma>),
+    Variants(Punctuated<Variant, Comma>),
+}
 
 #[derive(Debug)]
 struct StructField {
@@ -54,41 +67,57 @@ pub fn public(_attr: TokenStream, item: TokenStream) -> TokenStream {
     // eprintln!("{:#?}", &ast);
 
     let name = ast.ident;
-    let is_named_struct;
+    let item_type;
 
-    let fields = match ast.data {
+    let elements = match ast.data {
         Data::Struct(DataStruct {
             fields: Fields::Named(FieldsNamed { ref named, .. }),
             ..
         }) => {
-            is_named_struct = true;
-            named
+            item_type = ItemType::NamedStruct;
+            Elements::Fields(named.clone())
         }
         Data::Struct(DataStruct {
             fields: Fields::Unnamed(FieldsUnnamed { ref unnamed, .. }),
             ..
         }) => {
-            is_named_struct = false;
-            unnamed
+            item_type = ItemType::TupleStruct;
+            Elements::Fields(unnamed.clone())
         }
-        _ => unimplemented!("Only works for structs"),
+        Data::Enum(DataEnum { variants, .. }) => {
+            item_type = ItemType::Enum;
+            Elements::Variants(variants)
+        }
+        _ => unimplemented!("Only works for structs/enums"),
     };
 
-    let builder_fields = fields
-        .iter()
-        .map(|f| syn::parse2::<StructField>(f.to_token_stream()).unwrap());
+    let public_version = match elements {
+        Elements::Fields(fields) => {
+            let builder_fields = fields
+                .iter()
+                .map(|f| syn::parse2::<StructField>(f.to_token_stream()).unwrap());
 
-    let public_version = if is_named_struct {
-        quote! {
-            pub struct #name {
-                #(#builder_fields,)*
+            match item_type {
+                ItemType::NamedStruct => quote! {
+                    pub struct #name {
+                        #(#builder_fields,)*
+                    }
+                },
+                ItemType::TupleStruct => quote! {
+                    pub struct #name(
+                        #(#builder_fields,)*
+                    );
+                },
+                ItemType::Enum => unreachable!(),
             }
         }
-    } else {
-        quote! {
-            pub struct #name(
-                #(#builder_fields,)*
-            );
+        Elements::Variants(variants) => {
+            let variants = variants.iter();
+            quote! {
+                pub enum #name {
+                    #(#variants,)*
+                }
+            }
         }
     };
 
