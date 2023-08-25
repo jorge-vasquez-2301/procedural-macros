@@ -3,20 +3,11 @@
 version = 3
 
 [[package]]
-name = "hello-world-macro"
-version = "0.1.0"
-dependencies = [
- "quote",
- "syn 1.0.109",
- "venial",
-]
-
-[[package]]
 name = "make-public-macro"
 version = "0.1.0"
 dependencies = [
  "quote",
- "syn 2.0.29",
+ "syn",
 ]
 
 [[package]]
@@ -29,31 +20,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "procedural-macros"
-version = "0.1.0"
-dependencies = [
- "hello-world-macro",
- "make-public-macro",
-]
-
-[[package]]
 name = "quote"
-version = "1.0.32"
+version = "1.0.33"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "50f3b39ccfb720540debaa0164757101c08ecb8d326b15358ce76a62c7e85965"
+checksum = "5267fca4496028628a95160fc423a33e8b2e6af8a5302579e322e4b520293cae"
 dependencies = [
  "proc-macro2",
-]
-
-[[package]]
-name = "syn"
-version = "1.0.109"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "72b64191b275b66ffe2469e8af2c1cfe3bafa67b529ead792a6d0160888b4237"
-dependencies = [
- "proc-macro2",
- "quote",
- "unicode-ident",
 ]
 
 [[package]]
@@ -72,13 +44,3 @@ name = "unicode-ident"
 version = "1.0.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "301abaae475aa91687eb82514b328ab47a211a533026cb25fc3e519b86adfc3c"
-
-[[package]]
-name = "venial"
-version = "0.5.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "61584a325b16f97b5b25fcc852eb9550843a251057a5e3e5992d2376f3df4bb2"
-dependencies = [
- "proc-macro2",
- "quote",
-]

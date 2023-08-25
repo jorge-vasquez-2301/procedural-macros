@@ -1,5 +1,6 @@
 {
     "rust-analyzer.linkedProjects": [
-        ".\\hello-world-macro\\Cargo.toml"
+        ".\\hello-world-macro\\Cargo.toml",
+        ".\\make-public-macro\\Cargo.toml",
     ]
 }
