@@ -1,21 +1,16 @@
 use proc_macro::TokenStream;
 use quote::{quote, ToTokens};
 use syn::{
-    parse_macro_input, Data, DataStruct, DeriveInput, Field, Fields, FieldsNamed, Ident, Type,
+    parse::{Parse, ParseStream},
+    parse_macro_input,
+    punctuated::Punctuated,
+    token::Colon,
+    Data, DataStruct, DeriveInput, Fields, FieldsNamed, Ident, Visibility,
 };
 
 struct StructField {
     name: Ident,
-    ty: Type,
-}
-
-impl StructField {
-    fn new(field: &Field) -> Self {
-        Self {
-            name: field.ident.as_ref().unwrap().clone(),
-            ty: field.ty.clone(),
-        }
-    }
+    ty: Ident,
 }
 
 impl ToTokens for StructField {
@@ -23,6 +18,18 @@ impl ToTokens for StructField {
         let n = &self.name;
         let t = &self.ty;
         quote!(pub #n: #t).to_tokens(tokens)
+    }
+}
+
+impl Parse for StructField {
+    fn parse(input: ParseStream) -> Result<Self, syn::Error> {
+        let _vis: Result<Visibility, _> = input.parse();
+        let list = Punctuated::<Ident, Colon>::parse_terminated(input).unwrap();
+
+        Ok(StructField {
+            name: list.first().unwrap().clone(),
+            ty: list.last().unwrap().clone(),
+        })
     }
 }
 
@@ -39,7 +46,9 @@ pub fn public(_attr: TokenStream, item: TokenStream) -> TokenStream {
         _ => unimplemented!("Only works for structs with named fields"),
     };
 
-    let builder_fields = fields.iter().map(StructField::new);
+    let builder_fields = fields
+        .iter()
+        .map(|f| syn::parse2::<StructField>(f.to_token_stream()).unwrap());
 
     let public_version = quote! {
         pub struct #name {
