@@ -8,10 +8,12 @@ struct Example {
 }
 
 #[public]
-#[derive(Debug)]
+#[some_attr]
+#[some_other]
 struct Example2(String, pub u32);
 
 #[public]
+#[derive(Copy)]
 enum Example3 {
     Case1,
     Case2(String, u32),

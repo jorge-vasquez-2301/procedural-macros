@@ -67,6 +67,7 @@ pub fn public(_attr: TokenStream, item: TokenStream) -> TokenStream {
     // eprintln!("{:#?}", &ast);
 
     let name = ast.ident;
+    let attributes = ast.attrs;
     let item_type;
 
     let elements = match ast.data {
@@ -99,11 +100,13 @@ pub fn public(_attr: TokenStream, item: TokenStream) -> TokenStream {
 
             match item_type {
                 ItemType::NamedStruct => quote! {
+                    #(#attributes)*
                     pub struct #name {
                         #(#builder_fields,)*
                     }
                 },
                 ItemType::TupleStruct => quote! {
+                    #(#attributes)*
                     pub struct #name(
                         #(#builder_fields,)*
                     );
@@ -114,6 +117,7 @@ pub fn public(_attr: TokenStream, item: TokenStream) -> TokenStream {
         Elements::Variants(variants) => {
             let variants = variants.iter();
             quote! {
+                #(#attributes)*
                 pub enum #name {
                     #(#variants,)*
                 }
