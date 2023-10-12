@@ -4,7 +4,7 @@ use syn::Data::Struct;
 use syn::Fields::Named;
 use syn::__private::{Span, TokenStream2};
 use syn::{parse_macro_input, DeriveInput};
-use syn::{DataStruct, Field, FieldsNamed, Ident};
+use syn::{DataStruct, FieldsNamed, Ident};
 
 #[proc_macro]
 pub fn private(item: TokenStream) -> TokenStream {
