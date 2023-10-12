@@ -3,6 +3,24 @@
 version = 3
 
 [[package]]
+name = "compose-macro"
+version = "0.1.0"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.29",
+]
+
+[[package]]
+name = "hello-world-func-macro"
+version = "0.1.0"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.29",
+]
+
+[[package]]
 name = "hello-world-macro"
 version = "0.1.0"
 dependencies = [
@@ -42,6 +60,8 @@ dependencies = [
 name = "procedural-macros"
 version = "0.1.0"
 dependencies = [
+ "compose-macro",
+ "hello-world-func-macro",
  "hello-world-macro",
  "make-public-macro",
  "private-macro",

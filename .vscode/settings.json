@@ -4,5 +4,6 @@
         ".\\make-public-macro\\Cargo.toml",
         ".\\private-macro\\Cargo.toml",
         ".\\compose-macro\\Cargo.toml",
+        ".\\hello-world-func-macro\\Cargo.toml",
     ]
 }
