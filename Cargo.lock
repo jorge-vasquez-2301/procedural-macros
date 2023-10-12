@@ -21,6 +21,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "private-macro"
+version = "0.1.0"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.29",
+]
+
+[[package]]
 name = "proc-macro2"
 version = "1.0.66"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -35,6 +44,7 @@ version = "0.1.0"
 dependencies = [
  "hello-world-macro",
  "make-public-macro",
+ "private-macro",
 ]
 
 [[package]]

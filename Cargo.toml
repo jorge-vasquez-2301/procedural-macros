@@ -8,3 +8,4 @@ edition = "2021"
 [dependencies]
 hello-world-macro = { path = "./hello-world-macro" }
 make-public-macro = { path = "./make-public-macro" }
+private-macro = { path = "./private-macro" }
