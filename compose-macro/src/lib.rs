@@ -2,17 +2,18 @@ use proc_macro::TokenStream;
 use proc_macro2::Ident;
 use quote::{quote, ToTokens};
 use syn::parse::{Parse, ParseStream};
+use syn::parse_macro_input;
 use syn::punctuated::Punctuated;
-use syn::{parse_macro_input, Token};
+use syn::token::Dot;
 
 struct ComposeInput {
-    expressions: Punctuated<Ident, Token!(.)>,
+    expressions: Punctuated<Ident, Dot>,
 }
 
 impl Parse for ComposeInput {
     fn parse(input: ParseStream) -> Result<Self, syn::Error> {
         Ok(ComposeInput {
-            expressions: Punctuated::<Ident, Token!(.)>::parse_terminated(input)?,
+            expressions: Punctuated::<Ident, Dot>::parse_terminated(input)?,
         })
     }
 }
