@@ -12,3 +12,4 @@ private-macro = { path = "./private-macro" }
 compose-macro = { path = "./compose-macro" }
 hello-world-func-macro = { path = "./hello-world-func-macro" }
 panic-to-result-macro = { path = "./panic-to-result-macro" }
+analyze-macro = { path = "./analyze-macro" }

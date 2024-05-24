@@ -5,6 +5,7 @@
         "private-macro\\Cargo.toml",
         "compose-macro\\Cargo.toml",
         "hello-world-func-macro\\Cargo.toml",
-        "panic-to-result-macro\\Cargo.toml"
+        "panic-to-result-macro\\Cargo.toml",
+        "analyze-macro\\Cargo.toml"
     ]
 }
