@@ -6,13 +6,13 @@ struct Person {
     age: u32,
 }
 
-#[panic_to_result]
-fn create_person_with_empty_panic(name: String, age: u32) -> Result<Person, ()> {
-    if age > 30 {
-        panic!();
-    }
-    Person { name, age }
-}
+// #[panic_to_result]
+// fn create_person_with_empty_panic(name: String, age: u32) -> Result<Person, ()> {
+//     if age > 30 {
+//         panic!();
+//     }
+//     Person { name, age }
+// }
 
 fn main() {}
 

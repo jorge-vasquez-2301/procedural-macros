@@ -1,10 +1,10 @@
 {
     "rust-analyzer.linkedProjects": [
-        ".\\hello-world-macro\\Cargo.toml",
-        ".\\make-public-macro\\Cargo.toml",
-        ".\\private-macro\\Cargo.toml",
-        ".\\compose-macro\\Cargo.toml",
-        ".\\hello-world-func-macro\\Cargo.toml",
-        ".\\panic-to-result-macro\\Cargo.toml",
+        "hello-world-macro\\Cargo.toml",
+        "make-public-macro\\Cargo.toml",
+        "private-macro\\Cargo.toml",
+        "compose-macro\\Cargo.toml",
+        "hello-world-func-macro\\Cargo.toml",
+        "panic-to-result-macro\\Cargo.toml"
     ]
 }
